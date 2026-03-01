@@ -137,7 +137,7 @@ colcon build --packages-up-to qcar2_behavior_tree
 o
 
 ```bash
-colcon build --packages-up-to --parallel-workers 2 qcar2_behavior_tree
+colcon build --packages-up-to qcar2_behavior_tree --parallel-workers 2
 ```
 
 
