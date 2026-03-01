@@ -112,7 +112,7 @@ Clone this repository into the `src` folder of the workspace:
 
 ```bash
 cd ~/ros2_ws/src
-git clone <REPOSITORY_URL> .
+git --recurse-submodules clone https://github.com/97hackbrian/qcar2_seeker_ACC2026.git  .
 ```
 
 > **Note:** The trailing dot (`.`) clones the contents directly into `src/` without creating an extra subfolder. If the repository only contains the `qcar2_behavior_tree` package, omit the dot.
