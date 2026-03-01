@@ -112,7 +112,7 @@ Clone this repository into the `src` folder of the workspace:
 
 ```bash
 cd ~/ros2_ws/src
-git --recurse-submodules clone https://github.com/97hackbrian/qcar2_seeker_ACC2026.git  .
+git clone --recursive https://github.com/97hackbrian/qcar2_seeker_ACC2026.git
 ```
 
 > **Note:** The trailing dot (`.`) clones the contents directly into `src/` without creating an extra subfolder. If the repository only contains the `qcar2_behavior_tree` package, omit the dot.
@@ -133,6 +133,14 @@ Use the `--packages-up-to` flag to build **only** `qcar2_behavior_tree` and ever
 cd ~/ros2_ws
 colcon build --packages-up-to qcar2_behavior_tree
 ```
+
+o
+
+```bash
+colcon build --packages-up-to --parallel-workers 2 qcar2_behavior_tree
+```
+
+
 
 This will resolve and build the full dependency chain automatically:
 
