@@ -1,0 +1,4 @@
+*.onnx
+*.pyc
+*.pt
+*.bin
