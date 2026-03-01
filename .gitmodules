@@ -30,10 +30,10 @@
 	url = https://github.com/97hackbrian/qcar2_behavior_tree.git
 [submodule "qcar2_lane_following"]
 	path = qcar2_lane_following
-	url = git@github.com:97hackbrian/LaneFollow-ACC.git
+	url = https://github.com/97hackbrian/LaneFollow-ACC.git
 [submodule "qcar2_LaneMapping-ACC"]
 	path = qcar2_LaneMapping-ACC
-	url = git@github.com:97hackbrian/LaneMapping-ACC.git
+	url = https://github.com/97hackbrian/LaneMapping-ACC.git
 [submodule "qcar2_LaneSeg-ACC"]
 	path = qcar2_LaneSeg-ACC
 	url = https://github.com/97hackbrian/LaneSeg-ACC.git
@@ -42,7 +42,7 @@
 	url = https://github.com/97hackbrian/qcar2_mixer.git
 [submodule "qcar2_nodex"]
 	path = qcar2_nodex
-	url = git@github.com:97hackbrian/qcar2_nodex.git
+	url = https://github.com/97hackbrian/qcar2_nodex.git
 [submodule "qcar2_object_detections"]
 	path = qcar2_object_detections
 	url = https://github.com/97hackbrian/Yolo_v8.git
@@ -51,7 +51,7 @@
 	url = https://github.com/97hackbrian/qcar2_planner.git
 [submodule "qcar2_tracking"]
 	path = qcar2_tracking
-	url = git@github.com:HBKEduardex/Qcar_tracking.git
+	url = https://github.com/HBKEduardex/Qcar_tracking.git
 [submodule "rtabmap"]
 	path = rtabmap
 	url = https://github.com/introlab/rtabmap.git
