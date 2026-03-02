@@ -131,13 +131,13 @@ Use the `--packages-up-to` flag to build **only** `qcar2_behavior_tree` and ever
 
 ```bash
 cd ~/ros2_ws
-colcon build --packages-up-to qcar2_behavior_tree
+colcon build --packages-up-to qcar2_behavior_tree qcar2_teleop qcar2_planner lane_mapping_acc qcar2_mixer
 ```
 
-o
+or:
 
 ```bash
-colcon build --packages-up-to qcar2_behavior_tree --parallel-workers 2
+colcon build --packages-up-to qcar2_behavior_tree qcar2_teleop qcar2_planner lane_mapping_acc qcar2_mixer --parallel-workers 2
 ```
 
 
