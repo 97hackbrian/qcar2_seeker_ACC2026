@@ -146,7 +146,7 @@ The **hybrid_switch_controller** is a pixel-gated finite state machine that exam
 - When in blue/intersection zones or no lane detected → **Nav2** controls the vehicle
 - The BT manager dispatches goals to `/bt/goal`, which the planner decomposes into `/mission_goals` waypoints for the hybrid switch
 
-### :blue_circle: Mode B — Mapping Mode (`qcar2_mixer.launch.py`)
+### :large_blue_circle: Mode B — Mapping Mode (`qcar2_mixer.launch.py`)
 
 This mode is used for **building 3D road maps** with Nvblox before the autonomous mission. It creates both a 2D occupancy grid (Cartographer) and a 3D TSDF road surface (Nvblox) that are later used by Mode A.
 
@@ -385,7 +385,7 @@ ros2 launch qcar2_behavior_tree qcar2_behavior_tree_mother.launch.py \
 
 ---
 
-### :blue_circle: Mode B — Mapping Mode (map building)
+### :large_blue_circle: Mode B — Mapping Mode (map building)
 
 Use this mode **before** the autonomous mission to build the 3D road map and occupancy grid.
 
