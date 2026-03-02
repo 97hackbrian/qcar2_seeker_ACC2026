@@ -49,6 +49,7 @@
 | **Brayan Duran** | Systems & Integration | [![GitHub](https://img.shields.io/badge/-@97hackbrian-181717?logo=github&logoColor=white)](https://github.com/97hackbrian) |
 | **Leyla Lipa** | Planning & Control | |
 | **Mariel Valeriano** | Detection & Safety | |
+| **Leonardo Rondo** | Detection & Create Scenario | |
 
 </div>
 
