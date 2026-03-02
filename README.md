@@ -54,6 +54,25 @@
 
 ---
 
+## :bookmark_tabs: Table of Contents
+
+| # | Section | Description |
+|:-:|---|---|
+| 1 | [:page_facing_up: Abstract](#page_facing_up-abstract) | Project overview and key capabilities |
+| 2 | [:gear: System Architecture](#gear-system-architecture--operating-modes) | Operating Modes A (Autonomous) and B (Mapping) |
+| 3 | [:package: Package Overview](#package-package-overview) | Custom, Quanser-provided, and third-party packages |
+| 4 | [:wrench: Prerequisites](#wrench-prerequisites) | Software and hardware requirements |
+| **5** | [**:rocket: Clone, Build & Run the Full System**](#rocket-getting-started) | **Step-by-step guide to clone the repo, compile the workspace, and launch all nodes** |
+| 6 | [:joystick: Running the System](#joystick-running-the-system) | Commands to launch Mode A (mission) and Mode B (mapping) |
+| 7 | [:clapper: Demonstration](#clapper-demonstration) | GIFs and videos of the system in action |
+| 8 | [:gear: Configuration Reference](#gear-configuration-reference) | Behavior tree YAML, driving modes, mixer safety logic |
+| 9 | [:electric_plug: ROS 2 Interface](#electric_plug-ros-2-interface) | Published and subscribed topics |
+| 10 | [:toolbox: Troubleshooting](#toolbox-troubleshooting) | Common error diagnostics |
+| 11 | [:file_folder: Repository Structure](#file_folder-repository-structure) | Workspace directory tree |
+| 12 | [:scroll: License](#scroll-license) | MIT License |
+
+---
+
 ## :page_facing_up: Abstract
 
 This repository contains the complete software stack developed by **Team Seeker** for the [Autonomous Coding Challenge (ACC) Self-Driving Competition 2026](https://www.quanser.com/). The objective is to implement a fully autonomous driving system on the **Quanser QCar2** 1:10-scale vehicle platform.
