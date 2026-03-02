@@ -58,6 +58,15 @@
 
 This repository contains the complete software stack developed by **Team Seeker** for the [Autonomous Coding Challenge (ACC) Self-Driving Competition 2026](https://www.quanser.com/). The objective is to implement a fully autonomous driving system on the **Quanser QCar2** 1:10-scale vehicle platform.
 
+<div align="center">
+
+> **:movie_camera: Watch our demos!**
+>
+> [![Official Video](https://img.shields.io/badge/%E2%96%B6%20Official%20Video-Team%20SEEKER-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/N5glQULDirw?si=uXXSr9TTscwp94xa)
+> [![Full Run](https://img.shields.io/badge/%E2%96%B6%20Full%20Run-Normal%20Velocity-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/a0JIzkAq0CM)
+
+</div>
+
 The current codebase corresponds to the **virtual phase**, where the entire pipeline is validated inside the **Quanser QLabs** simulator. The system is built on **ROS 2 Humble Hawksbill** running within a custom **NVIDIA Isaac ROS 2.1** Docker environment (Ubuntu 20.04), leveraging GPU-accelerated perception through NVIDIA NITROS and TensorRT.
 
 > **Physical phase:** Implementation on the real QCar2 hardware is planned contingent upon qualification. *(Coming soon)*
