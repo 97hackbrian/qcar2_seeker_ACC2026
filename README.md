@@ -11,7 +11,9 @@
 [![C++](https://img.shields.io/badge/C++-17-00599C?logo=cplusplus&logoColor=white)](https://isocpp.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+</div>
 
+---
 **INIT QCAR2**
 The QCar2 OS has Ubuntu 20.0 native and ROS2 Humble installed for interaction with the hardware car but for development we use the Isaac ROS Docker container. In this way, we can have a consistent development environment.
 
@@ -64,3 +66,4 @@ cd /workspaces/isaac_ros-dev/ros2
 colcon build --packages-up-to qcar2_behavior_tree qcar2_teleop qcar2_planner lane_mapping_acc qcar2_mixer --parallel-workers 3
 ```
 
+---
