@@ -25,11 +25,12 @@ The system must be started in the following order:
 2. Run the ROS2 in the Isaac ROS Docker container. (Folder = ~/Documents/ACC_Development/Development/ros2)
 
 # 0. Connect to the qcar2.
-Connect to the 5Ghz wifi: SSID:ROSNET15G, PASSWORD: ROSNET2024
+Connect to the 5Ghz wifi: SSID: ROSNET15G, PASSWORD: ROSNET2024
 In your computer terminal:
 ```bash
 ssh nvidia@qcar-63264.local
 ```
+PASSWORD for all: nvidia
 
 # 1. Native OS without Docker in QCAR2 (Jetson Orin).
 ```bash
