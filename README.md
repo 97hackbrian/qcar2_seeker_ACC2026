@@ -58,6 +58,10 @@ IF YOU WANT TO OPEN OTHER TERMINAL, YOU MUST BE FOLLOW THESE STEPS BELOW:
 cd /home/$USER/Documents/ACC_Development/isaac_ros_common
 ./scripts/run_dev.sh  /home/$USER/Documents/ACC_Development/Development
 ```
+```bash
+cd /workspaces/isaac_ros-dev/ros2
+source install/setup.bash
+```
 NOTE: This comand must be executed AFTER initializing the container.
 
 This its all!!
