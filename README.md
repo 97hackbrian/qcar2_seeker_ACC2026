@@ -20,10 +20,18 @@ The QCar2 OS has Ubuntu 20.0 native and ROS2 Humble installed for interaction wi
 Note: In this case the csi camera number 2 are the front camera.
 
 The system must be started in the following order:
-1. Run the master hardware node in the NATIVE OS. (Folder = ~/ros2)
+0. Connect to the qcar2.
+1. Run the master hardware node (qcar2_nodex) in the NATIVE OS. (Folder = ~/ros2)
 2. Run the ROS2 in the Isaac ROS Docker container. (Folder = ~/Documents/ACC_Development/Development/ros2)
 
-# 1. Native OS without Docker.
+# 0. Connect to the qcar2.
+Connect to the 5Ghz wifi: SSID:ROSNET15G, PASSWORD: ROSNET2024
+In your computer terminal:
+```bash
+ssh nvidia@qcar-63264.local
+```
+
+# 1. Native OS without Docker in QCAR2 (Jetson Orin).
 ```bash
 cd ros2
 source install/setup.bash
@@ -32,7 +40,7 @@ ros2 launch qcar2_nodex qcar2_launch.py
 
 
 
-# 2. Isaac ROS Docker container.
+# 2. Isaac ROS Docker container in QCAR2 (Jetson Orin).
 Initializes the container.
 Open a new terminal.
 ```bash
@@ -55,7 +63,7 @@ NOTE: This comand must be executed AFTER initializing the container.
 This its all!!
 
 
-EXTRA OPTINAL......
+EXTRA OPTIONAL......
 Remember compiling steps:
 ```bash
 cd /workspaces/isaac_ros-dev/ros2
