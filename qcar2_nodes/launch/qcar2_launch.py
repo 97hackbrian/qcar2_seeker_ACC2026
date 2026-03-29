@@ -39,7 +39,7 @@ def generate_launch_description():
      
     return LaunchDescription([
         lidar_node,
-        # realsense_camera_node,
+        realsense_camera_node,
         csi_camera_node,
         qcar2_hardware,
     ])
