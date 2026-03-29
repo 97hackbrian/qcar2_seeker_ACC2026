@@ -2,7 +2,7 @@
 
 # :racing_car: Team Seeker — QCar2 Autonomous Driving System
 
-### ACC Self-Driving Competition 2026 — Virtual Phase
+### ACC Self-Driving Competition 2026 — physical Phase
 
 [![ROS 2 Humble](https://img.shields.io/badge/ROS%202-Humble%20Hawksbill-blue?logo=ros&logoColor=white)](https://docs.ros.org/en/humble/)
 [![Isaac ROS](https://img.shields.io/badge/NVIDIA-Isaac%20ROS%202.1-76B900?logo=nvidia&logoColor=white)](https://developer.nvidia.com/isaac-ros)
