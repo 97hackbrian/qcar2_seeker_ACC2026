@@ -15,7 +15,9 @@
 
 ---
 **INIT QCAR2**
-UPDATING/UPGRADING WITH APT IS PROHIBITED, ESPECIALLY UPGRADING.
+###UPDATING/UPGRADING WITH APT IS PROHIBITED, ESPECIALLY UPGRADING.
+
+
 The QCar2 OS has Ubuntu 20.0 native and ROS2 Humble installed for interaction with the hardware car but for development we use the Isaac ROS Docker container. In this way, we can have a consistent development environment.
 
 Note: In this case the csi camera number 2 are the front camera.
