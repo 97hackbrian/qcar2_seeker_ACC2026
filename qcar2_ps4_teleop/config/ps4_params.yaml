@@ -1,0 +1,17 @@
+# ─────────────────────────────────────────────────────────────────────
+# PS4 DualShock 4 D-Pad Teleop — Parameter Configuration
+# ─────────────────────────────────────────────────────────────────────
+
+ps4_teleop_node:
+  ros__parameters:
+    # ── PS4 Bluetooth MAC address ────────────────────────────────
+    ps4_mac: "00:1F:E2:9D:C5:0E"
+
+    # ── DS4 button indices (Linux defaults via pygame) ─────────────
+    # Run  try_joy.py  to verify your controller's button mapping.
+    btn_brake: 0               # × (Cross) — stop
+    btn_reset_all: 4           # L1 — reset speed + angle to 0
+    btn_reset_angle: 3         # △ (Triangle) — reset steering to 0
+
+    # ── Poll rate ──────────────────────────────────────────────────
+    poll_rate: 20.0            # Hz
