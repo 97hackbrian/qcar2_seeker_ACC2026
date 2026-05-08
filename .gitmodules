@@ -42,10 +42,10 @@
 	url = https://github.com/97hackbrian/qcar2_mixer.git
 [submodule "qcar2_nodex"]
 	path = qcar2_nodex
-	url = git@github.com:97hackbrian/qcar2_nodex.git
+	url = https://github.com/97hackbrian/qcar2_nodex.git
 [submodule "qcar2_object_detections"]
 	path = qcar2_object_detections
-	url = https://github.com/97hackbrian/Yolo_v8.git
+	url = https://github.com/97hackbrian/qcar2_object_detections.git
 [submodule "qcar2_planner"]
 	path = qcar2_planner
 	url = https://github.com/97hackbrian/qcar2_planner.git
