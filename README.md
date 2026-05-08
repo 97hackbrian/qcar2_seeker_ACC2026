@@ -76,6 +76,7 @@ Remember compiling steps:
 ```bash
 cd /workspaces/isaac_ros-dev/ros2
 cp /workspaces/isaac_ros-dev/ros2/src/utils/yolov8s.onnx /tmp/yolov8s.onnx
+pip install cupy-cuda11x #review the internet connections
 ```
 ```bash
 cd /workspaces/isaac_ros-dev/ros2
