@@ -6,6 +6,7 @@
 #include "quanser/quanser_memory.h"
 #include "std_msgs/msg/header.hpp"
 #include <chrono>
+#include <cmath>
 #include <thread>
 
 #include "quanser/quanser_hid.h"
@@ -25,6 +26,16 @@ class Nav2QCarConverter : public rclcpp::Node
     Nav2QCarConverter()
     : Node("nav2_qcar2_command_converter")
     {
+    // ── Ackermann parameters ────────────────────────────────────────
+    this->declare_parameter("wheelbase", 0.256);       // QCar2 wheelbase (m)
+    this->declare_parameter("max_steer_rad", 0.7);     // Physical servo limit (rad)
+    wheelbase_     = this->get_parameter("wheelbase").as_double();
+    max_steer_rad_ = this->get_parameter("max_steer_rad").as_double();
+
+    RCLCPP_INFO(this->get_logger(),
+        "Ackermann converter: wheelbase=%.3fm, max_steer=%.2f rad (%.1f°)",
+        wheelbase_, max_steer_rad_, max_steer_rad_ * 180.0 / M_PI);
+
     // configuring command publisher
     command_publisher_  = this->create_publisher<qcar2_interfaces::msg::MotorCommands>("qcar2_motor_speed_cmd", 1);
     // led_publisher_      = this->create_publisher<qcar2_interfaces::msg::BooleanLeds>("qcar2_led_cmd",10);
@@ -45,8 +56,23 @@ class Nav2QCarConverter : public rclcpp::Node
     private:       
         void nav2_command_callback(const geometry_msgs::msg::Twist &nav2_commands){
             nav2_speed = nav2_commands.linear.x;
-            nav2_steering = nav2_commands.angular.z;
 
+            // ── Ackermann conversion: angular.z (rad/s) → steering angle (rad) ──
+            // Formula: steering_angle = atan(wheelbase * wz / vx)
+            // When vx ≈ 0, use wz directly scaled to approximate steering intent
+            double vx = nav2_commands.linear.x;
+            double wz = nav2_commands.angular.z;
+
+            if (std::abs(vx) > 0.01) {
+                nav2_steering = std::atan(wheelbase_ * wz / vx);
+            } else {
+                // Robot nearly stopped: scale wz to a steering angle proportionally
+                nav2_steering = wheelbase_ * wz;
+            }
+
+            // ── Clamp to physical servo range [-max_steer, +max_steer] ──
+            if (nav2_steering >  max_steer_rad_) nav2_steering =  max_steer_rad_;
+            if (nav2_steering < -max_steer_rad_) nav2_steering = -max_steer_rad_;
         }
 
 
@@ -150,6 +176,8 @@ class Nav2QCarConverter : public rclcpp::Node
 
         double nav2_speed = 0;
         double nav2_steering = 0;
+        double wheelbase_ = 0.256;
+        double max_steer_rad_ = 0.7;
 
         rclcpp::TimerBase::SharedPtr timer_;
         rclcpp::TimerBase::SharedPtr timer2_;
