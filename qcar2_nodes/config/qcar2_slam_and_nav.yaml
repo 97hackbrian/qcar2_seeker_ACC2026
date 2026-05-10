@@ -1,8 +1,8 @@
 
 bt_navigator:
   ros__parameters:
-    use_sim_time: True
-    global_frame: map
+    use_sim_time: False
+    global_frame: pgm_map
     robot_base_frame: base_link
     odom_topic: /odom
     bt_loop_duration: 10
@@ -62,30 +62,33 @@ bt_navigator:
 
 bt_navigator_navigate_through_poses_rclcpp_node:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: False
 
 bt_navigator_navigate_to_pose_rclcpp_node:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: False
 
 controller_server:
   ros__parameters:
-    controller_frequency: 100.0
-    costmap_update_timeout: 0.30
+    # 20 Hz es suficiente para un robot lento (0.2 m/s). 100 Hz saturaba la Jetson
+    # y causaba ciclos vacíos donde MPPI no terminaba a tiempo → cmd_vel = 0 → frenazos
+    controller_frequency: 20.0
+    costmap_update_timeout: 1.0
     min_x_velocity_threshold: 0.001
-    min_y_velocity_threshold: 0.1
+    min_y_velocity_threshold: 0.5
     min_theta_velocity_threshold: 0.001
-    failure_tolerance: 0.3
+    # Tolerancia alta: permite al controller fallar varios ciclos sin abortar la navegación
+    failure_tolerance: 10.0
     progress_checker_plugins: ["progress_checker"]
-    goal_checker_plugins: ["general_goal_checker"] # "precise_goal_checker"
+    goal_checker_plugins: ["general_goal_checker"]
     controller_plugins: ["FollowPath"]
-    use_realtime_priority: true
+    use_realtime_priority: false
 
-    # Progress checker parameters
+    # Progress checker: relajado para que no cancele mientras el robot avanza lento
     progress_checker:
       plugin: "nav2_controller::SimpleProgressChecker"
-      required_movement_radius: 0.1
-      movement_time_allowance: 100.0
+      required_movement_radius: 0.05
+      movement_time_allowance: 30.0
     # Goal checker parameters
     #precise_goal_checker:
     #  plugin: "nav2_controller::SimpleGoalChecker"
@@ -95,24 +98,36 @@ controller_server:
     general_goal_checker:
       stateful: True
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.25
-      yaw_goal_tolerance: 0.25
+      xy_goal_tolerance: 0.05
+      yaw_goal_tolerance: 0.8
     FollowPath:
       plugin: "nav2_mppi_controller::MPPIController"
-      time_steps: 75
+      # ── Horizonte de predicción ────────────────────────────────────
+      # 56 steps × 0.05s = 2.8s de horizonte (suficiente a 0.2 m/s)
+      time_steps: 56
       model_dt: 0.05
-      batch_size: 2000
-      vx_std: 0.2
-      vy_std: 0.2
-      wz_std: 0.4
-      vx_max: 0.1
+      # ── Muestreo ──────────────────────────────────────────────────
+      # 1000 trayectorias (reducido de 2000) para que la Jetson lo compute a tiempo
+      batch_size: 1000
+      # ── Ruido de exploración ──────────────────────────────────────
+      # Más bajo = trayectorias más concentradas = movimiento más suave
+      vx_std: 0.1
+      vy_std: 0.0
+      wz_std: 0.3
+      # ── Límites de velocidad ──────────────────────────────────────
+      # El converter de C++ clampea a 0.2, pero MPPI necesita margen
+      # para explorar trayectorias viables
+      vx_max: 0.3
       vx_min: -0.1
       vy_max: 0.0
-      wz_max: 1.0
-      iteration_count: 1
-      prune_distance: 7.5
-      transform_tolerance: 0.1
-      temperature: 0.3
+      wz_max: 0.6
+      # ── Optimización ─────────────────────────────────────────────
+      iteration_count: 2
+      prune_distance: 3.0
+      transform_tolerance: 0.5
+      # ── Temperatura (selectividad) ───────────────────────────────
+      # Más alta = más suave (promedia más trayectorias en vez de elegir la mejor)
+      temperature: 0.5
       gamma: 0.015
       motion_model: "Ackermann"
       visualize: false
@@ -121,11 +136,14 @@ controller_server:
         trajectory_step: 5
         time_step: 3
       AckermannConstraints:
-        min_turning_r: 0.3
+        min_turning_r: 0.2
+      # ── Critics ───────────────────────────────────────────────────
+      # Pesos reducidos para evitar que el controlador se paralice
+      # cuando no puede satisfacer todos los critics simultáneamente
       critics: [
         "ConstraintCritic", "GoalCritic",
         "GoalAngleCritic", "PathAlignCritic", "PathFollowCritic",
-        "PathAngleCritic", "PreferForwardCritic"]
+        "PreferForwardCritic"]
       ConstraintCritic:
         enabled: true
         cost_power: 1
@@ -138,17 +156,17 @@ controller_server:
       GoalAngleCritic:
         enabled: true
         cost_power: 1
-        cost_weight: 3.0
+        cost_weight: 1.0
         threshold_to_consider: 0.5
       PreferForwardCritic:
         enabled: true
         cost_power: 1
-        cost_weight: 5.0
+        cost_weight: 3.0
         threshold_to_consider: 0.5
       PathAlignCritic:
         enabled: true
         cost_power: 1
-        cost_weight: 14.0
+        cost_weight: 8.0
         max_path_occupancy_ratio: 0.05
         trajectory_point_step: 4
         threshold_to_consider: 0.5
@@ -160,18 +178,6 @@ controller_server:
         cost_weight: 5.0
         offset_from_furthest: 5
         threshold_to_consider: 1.4
-      PathAngleCritic:
-        enabled: true
-        cost_power: 1
-        cost_weight: 2.0
-        offset_from_furthest: 4
-        threshold_to_consider: 0.5
-        max_angle_to_furthest: 1.0
-        mode: 0
-      # TwirlingCritic:
-      #   enabled: true
-      #   twirling_cost_power: 1
-      #   twirling_cost_weight: 10.0
 
 
 local_costmap:
@@ -181,8 +187,9 @@ local_costmap:
       publish_frequency: 2.0
       global_frame: odom
       robot_base_frame: base_link
-      use_sim_time: True
+      use_sim_time: False
       rolling_window: true
+      transform_tolerance: 1.0
       width: 3
       height: 3
       resolution: 0.05
@@ -222,11 +229,12 @@ global_costmap:
     ros__parameters:
       update_frequency: 1.0
       publish_frequency: 1.0
-      global_frame: map
+      global_frame: pgm_map
       robot_base_frame: base_link
-      use_sim_time: True
+      use_sim_time: False
       robot_radius: 0.3
       resolution: 0.05
+      transform_tolerance: 1.0
       track_unknown_space: true
       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
       obstacle_layer:
@@ -273,7 +281,7 @@ planner_server:
 
 smoother_server:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: False
     smoother_plugins: ["simple_smoother"]
     simple_smoother:
       plugin: "nav2_smoother::SimpleSmoother"
@@ -300,7 +308,7 @@ behavior_server:
     global_frame: odom
     robot_base_frame: base_link
     transform_tolerance: 0.1
-    use_sim_time: true
+    use_sim_time: false
     simulate_ahead_time: 2.0
     max_rotational_vel: 1.0  #1.0
     min_rotational_vel: 0.4 #0.4
@@ -308,7 +316,7 @@ behavior_server:
 
 robot_state_publisher:
   ros__parameters:
-    use_sim_time: True
+    use_sim_time: False
 
 waypoint_follower:
   ros__parameters:
@@ -321,16 +329,16 @@ waypoint_follower:
       enabled: True
       waypoint_pause_duration: 200
 
-# velocity_smoother:
-#   ros__parameters:
-#     smoothing_frequency: 100.0
-#     scale_velocities: False
-#     feedback: "OPEN_LOOP"
-#     max_velocity: [0.1, 0.0, 1.0]
-#     min_velocity: [-0.1, 0.0, -1.0]
-#     max_accel: [2.5, 0.0, 3.2]
-#     max_decel: [-2.5, 0.0, -3.2]
-#     odom_topic: "odom"
-#     odom_duration: 0.1
-#     deadband_velocity: [0.0, 0.0, 0.0]
-#     velocity_timeout: 1.0
+velocity_smoother:
+  ros__parameters:
+    smoothing_frequency: 20.0
+    scale_velocities: False
+    feedback: "OPEN_LOOP"
+    max_velocity: [0.3, 0.0, 0.6]
+    min_velocity: [-0.1, 0.0, -0.6]
+    max_accel: [0.5, 0.0, 1.0]
+    max_decel: [-1.0, 0.0, -1.0]
+    odom_topic: "odom"
+    odom_duration: 0.1
+    deadband_velocity: [0.0, 0.0, 0.0]
+    velocity_timeout: 1.0
