@@ -98,8 +98,8 @@ controller_server:
     general_goal_checker:
       stateful: True
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.05
-      yaw_goal_tolerance: 0.2
+      xy_goal_tolerance: 0.01
+      yaw_goal_tolerance: 0.1
     FollowPath:
       plugin: "nav2_mppi_controller::MPPIController"
       # ── Horizonte de predicción ────────────────────────────────────
@@ -151,13 +151,13 @@ controller_server:
         cost_weight: 4.0
       GoalCritic:
         enabled: true
-        cost_power: 1
-        cost_weight: 5.0
+        cost_power: 2
+        cost_weight: 8.5
         threshold_to_consider: 1.4
       GoalAngleCritic:
         enabled: true
         cost_power: 1
-        cost_weight: 2.0
+        cost_weight: 6.0
         threshold_to_consider: 0.5
       PreferForwardCritic:
         enabled: true
