@@ -342,10 +342,16 @@ velocity_smoother:
     feedback: "OPEN_LOOP"
     # wz limits MUST match MPPI wz_max (1.0 rad/s) — derived from
     # Ackermann: steering [-0.7, 0.7] rad, wheelbase=0.256m
-    max_velocity: [0.2, 0.0, 1.0]
-    min_velocity: [-0.1, 0.0, -1.0]
-    max_accel: [0.5, 0.0, 0.666]
-    max_decel: [-1.0, 0.0, -0.666]
+    max_velocity: [0.2, 0.0, 0.9]
+    min_velocity: [-0.1, 0.0, -0.9]
+    max_accel: [0.5, 0.0, 0.59]
+    max_decel: [-1.0, 0.0, -0.59]
+
+    #max_velocity: [0.2, 0.0, 1.0]
+    #min_velocity: [-0.1, 0.0, -1.0]
+    #max_accel: [0.5, 0.0, 0.666]
+    #max_decel: [-1.0, 0.0, -0.666]
+    
     odom_topic: "odom"
     odom_duration: 0.1
     deadband_velocity: [0.0, 0.0, 0.0]
