@@ -98,17 +98,17 @@ controller_server:
     general_goal_checker:
       stateful: True
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.01
-      yaw_goal_tolerance: 0.1
+      xy_goal_tolerance: 0.02
+      yaw_goal_tolerance: 0.22
     FollowPath:
       plugin: "nav2_mppi_controller::MPPIController"
       # ── Horizonte de predicción ────────────────────────────────────
       # 56 steps × 0.05s = 2.8s de horizonte (suficiente a 0.2 m/s)
-      time_steps: 50
+      time_steps: 40 #50
       model_dt: 0.05
       # ── Muestreo ──────────────────────────────────────────────────
       # 1000 trayectorias (reducido de 2000) para que la Jetson lo compute a tiempo
-      batch_size: 700
+      batch_size: 600 #700 550
       # ── Ruido de exploración ──────────────────────────────────────
       # Más bajo = trayectorias más concentradas = movimiento más suave
       vx_std: 0.1
@@ -344,8 +344,8 @@ velocity_smoother:
     # Ackermann: steering [-0.7, 0.7] rad, wheelbase=0.256m
     max_velocity: [0.2, 0.0, 0.9]
     min_velocity: [-0.1, 0.0, -0.9]
-    max_accel: [0.5, 0.0, 0.59]
-    max_decel: [-1.0, 0.0, -0.59]
+    max_accel: [0.5, 0.0, 0.3]
+    max_decel: [-1.0, 0.0, -0.3]
 
     #max_velocity: [0.2, 0.0, 1.0]
     #min_velocity: [-0.1, 0.0, -1.0]
